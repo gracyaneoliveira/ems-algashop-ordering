@@ -111,6 +111,11 @@ public class Order {
         this.changeStatus(OrderStatus.PAID);
     }
 
+    public void markAsReady() {
+        this.changeStatus(OrderStatus.READY);
+        this.setReadyAt(OffsetDateTime.now());
+    }
+
     private void changeStatus(OrderStatus newStatus) {
         Objects.requireNonNull(newStatus);
         if (this.status().canNotChangeTo(newStatus)) {
