@@ -5,6 +5,7 @@ import com.algaworks.algashop.ordering.domain.model.valueobject.*;
 import com.algaworks.algashop.ordering.domain.model.valueobject.id.CustomerId;
 import com.algaworks.algashop.ordering.domain.model.valueobject.id.OrderId;
 import com.algaworks.algashop.ordering.domain.model.valueobject.id.OrderItemId;
+import jakarta.persistence.Version;
 import lombok.Builder;
 
 import java.math.BigDecimal;
@@ -36,8 +37,10 @@ public class Order implements AggregateRoot<OrderId> {
 
     private Set<OrderItem> items;
 
+    private Long version;
+
     @Builder(builderClassName = "ExistingOrderBuilder", builderMethodName = "existing")
-    public Order(OrderId id, CustomerId customerId,
+    public Order(OrderId id, Long version, CustomerId customerId,
                  Money totalAmount, Quantity totalItems,
                  OffsetDateTime placedAt, OffsetDateTime paidAt,
                  OffsetDateTime canceledAt, OffsetDateTime readyAt,
@@ -45,6 +48,7 @@ public class Order implements AggregateRoot<OrderId> {
                  OrderStatus status, PaymentMethod paymentMethod,
                  Set<OrderItem> items) {
         this.setId(id);
+        this.serVersion(version);
         this.setCustomerId(customerId);
         this.setTotalAmount(totalAmount);
         this.setTotalItems(totalItems);
@@ -62,6 +66,7 @@ public class Order implements AggregateRoot<OrderId> {
     public static Order draft(CustomerId customerId) {
         return new Order(
                 new OrderId(),
+                null,
                 customerId,
                 Money.ZERO,
                 Quantity.ZERO,
@@ -295,6 +300,14 @@ public class Order implements AggregateRoot<OrderId> {
 
         this.setTotalAmount(new Money(totalAmount));
         this.setTotalItems(new Quantity(totalItemsQuantity));
+    }
+
+    public Long version() {
+        return version;
+    }
+
+    public void serVersion(Long version) {
+        this.version = version;
     }
 
     private void setId(OrderId id) {

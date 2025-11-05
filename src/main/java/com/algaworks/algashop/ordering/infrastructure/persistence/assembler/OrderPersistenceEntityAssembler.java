@@ -5,7 +5,7 @@ import com.algaworks.algashop.ordering.infrastructure.persistence.entity.OrderPe
 import org.springframework.stereotype.Component;
 
 @Component
-public class OrderPersistenceEntityAssembler {
+public class  OrderPersistenceEntityAssembler {
 
     public OrderPersistenceEntity fromDomain(Order order) {
         return merge(new OrderPersistenceEntity(), order);
@@ -22,6 +22,7 @@ public class OrderPersistenceEntityAssembler {
         orderPersistenceEntity.setPaidAt(order.paidAt());
         orderPersistenceEntity.setCanceledAt(order.canceledAt());
         orderPersistenceEntity.setReadyAt(order.readyAt());
+        orderPersistenceEntity.setVersion(order.version());
         return orderPersistenceEntity;
     }
 

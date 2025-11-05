@@ -1,9 +1,6 @@
 package com.algaworks.algashop.ordering.infrastructure.persistence.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -46,5 +43,6 @@ public class OrderPersistenceEntity {
     private OffsetDateTime lastModifiedAt;
     @LastModifiedBy
     private UUID lastModifiedByUserId;
-
+    @Version
+    private Long version;
 }
