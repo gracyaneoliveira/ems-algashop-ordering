@@ -24,12 +24,14 @@ public class Customer implements AggregateRoot<CustomerId> {
     private OffsetDateTime archivedAt;
     private LoyaltyPoints loyaltyPoints;
     private Address address;
+    private Long version;
 
     @Builder(builderClassName = "BrandNewCustomerBuild", builderMethodName = "brandNew")
     private static Customer createBrandNew(FullName fullName, BirthDate birthDate, Email email,
                                     Phone phone, Document document, Boolean promotionNotificationsAllowed,
                                     Address address) {
         return new Customer(new CustomerId(),
+                null,
                 fullName,
                 birthDate,
                 email,
@@ -44,10 +46,11 @@ public class Customer implements AggregateRoot<CustomerId> {
     }
 
     @Builder(builderClassName = "ExistingCustomerBuild", builderMethodName = "existing")
-    private Customer(CustomerId id, FullName fullName, BirthDate birthDate, Email email, Phone phone,
+    private Customer(CustomerId id, Long version, FullName fullName, BirthDate birthDate, Email email, Phone phone,
                      Document document, Boolean promotionNotificationsAllowed, Boolean archived,
                      OffsetDateTime registeredAt, OffsetDateTime archivedAt, LoyaltyPoints loyaltyPoints, Address address) {
         this.setId(id);
+        this.setVersion(version);
         this.setFullName(fullName);
         this.setBirthDate(birthDate);
         this.setEmail(email);
@@ -147,7 +150,7 @@ public class Customer implements AggregateRoot<CustomerId> {
         return registeredAt;
     }
 
-    public OffsetDateTime isArchivedAt() {
+    public OffsetDateTime archivedAt() {
         return archivedAt;
     }
 
@@ -157,6 +160,14 @@ public class Customer implements AggregateRoot<CustomerId> {
 
     public Address address() {
         return address;
+    }
+
+    public Long version() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 
     private void setId(CustomerId id) {
