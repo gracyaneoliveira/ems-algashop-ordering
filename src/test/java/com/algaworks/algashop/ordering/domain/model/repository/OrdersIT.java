@@ -193,7 +193,6 @@ class OrdersIT {
         Assertions.assertThat(orders.totalSoldForCustomer(customerId)).isEqualTo(expectedTotalAmount);
 
         Assertions.assertThat(orders.totalSoldForCustomer(new CustomerId())).isEqualTo(Money.ZERO);
-
     }
 
     @Test
