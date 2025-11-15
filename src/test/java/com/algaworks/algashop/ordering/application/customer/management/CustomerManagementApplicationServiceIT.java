@@ -132,4 +132,20 @@ class CustomerManagementApplicationServiceIT {
                 .isThrownBy(() -> customerManagementApplicationService.archive(customerId));
     }
 
+    @Test
+    void changeEmail(){
+        CustomerInput input = CustomerInputTestDataBuilder.aCustomer().build();
+        UUID customerId = customerManagementApplicationService.create(input);
+        String newEmail = "johndoe2@email.com";
+
+        Assertions.assertThat(customerId).isNotNull();
+
+        customerManagementApplicationService.changeEmail(customerId,newEmail);
+
+        CustomerOutput customerOutput = customerManagementApplicationService.findById(customerId);
+
+        Assertions.assertThat(customerOutput.getEmail()).isNotNull();
+        Assertions.assertThat(customerOutput.getEmail()).isEqualTo(newEmail);
+    }
+
 }
