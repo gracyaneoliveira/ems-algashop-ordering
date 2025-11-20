@@ -1,7 +1,12 @@
 package com.algaworks.algashop.ordering.domain.model.customer;
 
-import java.time.OffsetDateTime;
-import java.time.OffsetTime;
+import com.algaworks.algashop.ordering.domain.model.commons.Email;
+import com.algaworks.algashop.ordering.domain.model.commons.FullName;
 
-public record CustomerRegisteredEvent(CustomerId customerId, OffsetDateTime registeredAt) {
+import java.time.OffsetDateTime;
+
+public record CustomerRegisteredEvent(CustomerId customerId,
+                                      OffsetDateTime registeredAt,
+                                      FullName fullName,
+                                      Email email) {
 }
