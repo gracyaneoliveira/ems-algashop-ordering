@@ -82,7 +82,7 @@ public class OrderDetailOutputTestDataBuilder {
                 .productName("Notebook Dive Gamer X11")
                 .price(new BigDecimal("19.99"))
                 .quantity(2)
-                .totalAmount(new BigDecimal("19.99"))
+                .totalAmount(new BigDecimal("41.98"))
                 .build());
         return items;
     }

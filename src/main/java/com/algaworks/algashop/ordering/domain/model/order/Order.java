@@ -88,6 +88,10 @@ public class Order
         Objects.requireNonNull(product);
         Objects.requireNonNull(quantity);
 
+        if (quantity.equals(Quantity.ZERO)) {
+            throw new IllegalArgumentException();
+        }
+
         verifyIfChangeable();
 
         product.checkOutOfStock();

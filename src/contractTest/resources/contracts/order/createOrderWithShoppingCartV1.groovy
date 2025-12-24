@@ -4,16 +4,56 @@ import org.springframework.cloud.contract.spec.Contract
 
 Contract.make {
     request {
-        method GET()
+        method POST()
+        url "/api/v1/orders"
         headers {
-            accept 'application/json'
+            contentType("application/vnd.order-with-shopping-cart.v1+json")
         }
-        url("/api/v1/orders/01226N0640J7Q")
+        body([
+                shoppingCartId: value(test(anyUuid()), stub(anyUuid())),
+                paymentMethod: "GATEWAY_BALANCE",
+                shipping: [
+                        recipient: [
+                                firstName: "John",
+                                lastName: "Doe",
+                                document: "255-08-0578",
+                                phone: "478-256-2604"
+                        ],
+                        address: [
+                                street: "Elm Street",
+                                number: "456",
+                                complement: "House A",
+                                neighborhood: "Central Park",
+                                city: "Springfield",
+                                state: "Illinois",
+                                zipCode: "62704"
+                        ]
+                ],
+                billing: [
+                        firstName: "Matt",
+                        lastName: "Damon",
+                        phone: "123-321-1112",
+                        document: "123-45-6789",
+                        email: "matt.damon@email.com",
+                        address: [
+                                street: "Amphitheatre Parkway",
+                                number: "1600",
+                                complement: "",
+                                neighborhood: "Mountain View",
+                                city: "Mountain View",
+                                state: "California",
+                                zipCode: "94043"
+                        ]
+                ]
+        ])
     }
     response {
-        status 200
+        status 201
+        headers {
+            contentType('application/json')
+        }
         body([
-                id: "01226N0640J7Q",
+                id: anyNonBlankString(),
                 customer: [
                         id: anyUuid(),
                         firstName: "John",
@@ -25,9 +65,6 @@ Contract.make {
                 totalItems: 2,
                 totalAmount: 41.98,
                 placedAt: anyIso8601WithOffset(),
-                canceledAt: null,
-                paidAt: null,
-                readyAt: null,
                 status: "PLACED",
                 paymentMethod: "GATEWAY_BALANCE",
                 shipping: [
@@ -67,10 +104,10 @@ Contract.make {
                 items: [
                         [
                                 id: anyNonBlankString(),
+                                orderId: anyNonBlankString(),
                                 productId: anyUuid(),
-                                orderId: "01226N0640J7Q",
-                                price: 19.99,
                                 productName: "Notebook Dive Gamer X11",
+                                price: 19.99,
                                 quantity: 2,
                                 totalAmount: 41.98
                         ]
