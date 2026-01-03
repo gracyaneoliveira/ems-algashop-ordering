@@ -1,4 +1,4 @@
-package com.algaworks.algashop.ordering.infrastructure.product.client;
+package com.algaworks.algashop.ordering.infrastructure.product.client.fake;
 
 import com.algaworks.algashop.ordering.domain.model.product.ProductCatalogService;
 import com.algaworks.algashop.ordering.domain.model.commons.Money;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-@Component
+//@Component
 public class ProductCatalogServiceFakeImpl implements ProductCatalogService {
     @Override
     public Optional<Product> ofId(ProductId productId) {
