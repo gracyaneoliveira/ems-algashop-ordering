@@ -10,4 +10,6 @@ Microservice AlgaShop Ordering
 ./gradlew -x check build flywayValidate -Dflyway.configFiles=flyway.conf
 
 ./gradlew -x check build flywayMigrate -Dflyway.configFiles=flyway.conf
+
+./gradlew -x check build flywayClean -Dflyway.configFiles=flyway.conf
 ```
